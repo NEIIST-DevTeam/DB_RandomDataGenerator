@@ -6,8 +6,12 @@ import java.io.IOException;
 
 public class Generator {
 
+    private static Names names;
+
     public static void main(String[] args) throws IOException
     {
-        Names names = new Names();
+        names = new Names();
+        names.createPerson(50);
     }
+
 }
