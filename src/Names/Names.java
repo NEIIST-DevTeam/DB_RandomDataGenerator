@@ -66,6 +66,24 @@ public class Names {
         return surnameNames.get(position).toLowerCase();
     }
 
+    public String getDegree()
+    {
+        //Generate a random number to get a random name from the whole list
+        Random random = new Random();
+        int position = random.nextInt(degreesNames.size());
+
+        return degreesNames.get(position);
+    }
+
+    public String getCampus()
+    {
+        //Generate a random number to get a random name from the whole list
+        Random random = new Random();
+        int position = random.nextInt(campiNames.size());
+
+        return campiNames.get(position);
+    }
+
     public String createEmail()
     {
         //Generate the email to create the in the table Person

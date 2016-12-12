@@ -5,6 +5,7 @@ import Tables.Student;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 
 public class Generator {
@@ -13,6 +14,8 @@ public class Generator {
     private int oid;
     private HashMap<Integer, String> personTable = new HashMap<>();
     private HashMap<Integer, Student> studentTable = new HashMap<>();
+
+    Random random = new Random();
 
 
     public Generator(int numberToGenerate) throws IOException
@@ -27,16 +30,24 @@ public class Generator {
         //Write numberOfPeople times to the file, all of which have different emails
         while (oid < numberOfPeople)
         {
-            personTable.put(oid, names.createEmail());
+
+            String email = names.createEmail();
+
+            personTable.put(oid, email);
+
+            //Let's say there's a 80% chance of the person created being a student
+            int chance = randomGenerator();
+            if(chance < 80)
+            {
+                String ist_id = "ist" + String.valueOf(random.nextInt(999999));
+                Student student = new Student(ist_id, email, names.getDegree(), names.getCampus());
+                studentTable.put(oid, student);
+            }
             oid++;
         }
 
     }
 
-    private void createStudent()
-    {
-        
-    }
 
     public void writeFile()
     {
@@ -59,6 +70,16 @@ public class Generator {
                 //so that the queries are consistend with the results from the hashmap
                 String query = "INSERT INTO Person (oid, email) VALUES ('" + ++i + "','" + personTable.get(i-1) + "')";
                 print.println(query);
+
+                if(studentTable.containsKey(i))
+                {
+                    Student student = studentTable.get(i);
+                    String studentQuery = "INSERT INTO STUDENT (person_oid, ist_id, ist_email, degree, campus) VALUES ('"
+                            + i + "','" + student.getIst_id() + "','" + student.getIst_email() + "','" + student.getDegree()
+                            + "','" + student.getCampus() + "')";
+                    print.println(studentQuery);
+                }
+
             }
 
         }
@@ -66,6 +87,11 @@ public class Generator {
         {
             System.err.println("Error writing on sql file while creating person");
         }
+    }
+
+    private int randomGenerator()
+    {
+        return random.nextInt(100);
     }
 }
 
