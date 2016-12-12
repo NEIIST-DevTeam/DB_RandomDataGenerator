@@ -1,11 +1,6 @@
 package Names;
 
-import javafx.scene.shape.Path;
-
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Random;
@@ -16,6 +11,8 @@ public class Names {
     private ArrayList<String> surnameNames = new ArrayList<>();
     private ArrayList<String> entityNames = new ArrayList<>();
     private ArrayList<String> organizationNames = new ArrayList<>();
+    private ArrayList<String> degreesNames = new ArrayList<>();
+    private ArrayList<String> campiNames = new ArrayList<>();
 
     private int oid = 0;
 
@@ -25,6 +22,8 @@ public class Names {
 
         readFile("src\\Names\\firstname_list.txt", firstNames);
         readFile("src\\Names\\surname_list.txt", surnameNames);
+        readFile("src\\Names\\degrees_list.txt", degreesNames);
+        readFile("src\\Names\\campi_list.txt", campiNames);
     }
 
     private void readFile(String fileName, ArrayList<String> names) throws IOException
@@ -79,30 +78,7 @@ public class Names {
         return email;
     }
 
-    public void createPerson(int numberOfPeople) {
-
-        //Clean the previous file
-        File file = new File("createDatabase.sql");
-        file.delete();
 
 
-        //Using FileWriter will be a lot quicker since we are opening and closing the file
-        try(FileWriter fileWriter = new FileWriter("createDatabase.sql", true);
-            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-            PrintWriter print = new PrintWriter(bufferedWriter))
-        {
-            //Write numberOfPeople times to the file, all of which have different emails
-            while(oid < numberOfPeople)
-            {
-                String query = "INSERT INTO Person (oid, email) VALUES ('" + String.valueOf(++oid) + "','" + createEmail() + "')";
-                print.println(query);
-            }
 
-        }
-        catch (IOException e)
-        {
-            System.err.println("Error writing on sql file while creating person");
-        }
-
-    }
 }
