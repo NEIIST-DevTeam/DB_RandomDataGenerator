@@ -14,7 +14,7 @@ public class Names {
     private ArrayList<String> degreesNames = new ArrayList<>();
     private ArrayList<String> campiNames = new ArrayList<>();
 
-    private int oid = 0;
+    Random random = new Random();
 
     public Names() throws IOException
     {
@@ -22,6 +22,8 @@ public class Names {
 
         readFile("src\\Names\\firstname_list.txt", firstNames);
         readFile("src\\Names\\surname_list.txt", surnameNames);
+        readFile("src\\Names\\entities_list.txt", entityNames);
+        readFile("src\\Names\\organizations_list.txt", organizationNames);
         readFile("src\\Names\\degrees_list.txt", degreesNames);
         readFile("src\\Names\\campi_list.txt", campiNames);
     }
@@ -51,7 +53,6 @@ public class Names {
     private String getFirstName()
     {
         //Generate a random number to get a random name from the whole list
-        Random random = new Random();
         int position = random.nextInt(firstNames.size());
 
         return firstNames.get(position).toLowerCase();
@@ -60,7 +61,6 @@ public class Names {
     private String getLastName()
     {
         //Generate a random number to get a random name from the whole list
-        Random random = new Random();
         int position = random.nextInt(surnameNames.size());
 
         return surnameNames.get(position).toLowerCase();
@@ -69,7 +69,6 @@ public class Names {
     public String getDegree()
     {
         //Generate a random number to get a random name from the whole list
-        Random random = new Random();
         int position = random.nextInt(degreesNames.size());
 
         return degreesNames.get(position);
@@ -78,10 +77,18 @@ public class Names {
     public String getCampus()
     {
         //Generate a random number to get a random name from the whole list
-        Random random = new Random();
         int position = random.nextInt(campiNames.size());
 
         return campiNames.get(position);
+    }
+
+    public String getGender()
+    {
+        int i = random.nextInt(2) + 1;
+        if(i == 1)
+            return "male";
+        else
+            return "female";
     }
 
     public String createEmail()

@@ -1,5 +1,7 @@
 
 import Names.Names;
+import Tables.Associate;
+import Tables.Entity;
 import Tables.Student;
 
 import java.io.*;
@@ -14,6 +16,8 @@ public class Generator {
     private int oid;
     private HashMap<Integer, String> personTable = new HashMap<>();
     private HashMap<Integer, Student> studentTable = new HashMap<>();
+    private HashMap<Integer, Entity> entityTable = new HashMap<>();
+    private HashMap<Integer, Associate> associateTable = new HashMap<>();
 
     Random random = new Random();
 
@@ -32,16 +36,30 @@ public class Generator {
         {
 
             String email = names.createEmail();
-
             personTable.put(oid, email);
 
-            //Let's say there's a 80% chance of the person created being a student
+
             int chance = randomGenerator();
+
+            //Let's say there's a 80% chance of the person created being a student
             if(chance < 80)
             {
                 String ist_id = "ist" + String.valueOf(random.nextInt(999999));
                 Student student = new Student(ist_id, email, names.getDegree(), names.getCampus());
                 studentTable.put(oid, student);
+            }
+
+            //Let's say there's a 20% chance of the person being an associate (all associates will be students also in this case)
+            if(chance < 20)
+            {
+                String day = String.valueOf(random.nextInt(30) + 1);       //day has values between 1 and 30
+                String month = String.valueOf(random.nextInt(12) + 1);     //month has values between 1 and 12
+                String year = String.valueOf(random.nextInt(15) + 1985); //year has values between 1985 and 2000
+
+                String date = day + "/" + month + "/" + year;
+                Associate associate = new Associate(date, names.getGender());
+                associateTable.put(oid, associate);
+
             }
             oid++;
         }
@@ -78,6 +96,14 @@ public class Generator {
                             + i + "','" + student.getIst_id() + "','" + student.getIst_email() + "','" + student.getDegree()
                             + "','" + student.getCampus() + "')";
                     print.println(studentQuery);
+                }
+
+                if(associateTable.containsKey(i))
+                {
+                    Associate associate = associateTable.get(i);
+                    String associateQuery = "INSERT INTO Associate (person_oid, birthdate, gender) VALUES ('"
+                            + oid + "','" + associate.getDate() + "','" + associate.getGender() + "')";
+                    print.println(associateQuery);
                 }
 
             }
