@@ -8,11 +8,11 @@ The entities, organizations, degrees and campi, are all from the .txt files in t
 organizations, just edit those files.
 
 
-To execute this app
+To execute this app:
 
-[Commands to compile]
-	cd DB_RandomDataGenerator/src
-	javac -cp ./Tables/*:./Names/*:./ *java
+```
+make
+make run arg=NUMBER
+```
 
-[To execute]
-	java Main <Number of Data to generate>
+Where NUMBER is the amount of Data to generate.
