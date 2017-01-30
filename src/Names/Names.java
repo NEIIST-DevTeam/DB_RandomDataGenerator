@@ -20,12 +20,12 @@ public class Names {
     {
         //The constructor will initialize both these arrayLists from the files that are in the same folder
 
-        readFile("src\\Names\\firstname_list.txt", firstNames);
-        readFile("src\\Names\\surname_list.txt", surnameNames);
-        readFile("src\\Names\\entities_list.txt", entityNames);
-        readFile("src\\Names\\organizations_list.txt", organizationNames);
-        readFile("src\\Names\\degrees_list.txt", degreesNames);
-        readFile("src\\Names\\campi_list.txt", campiNames);
+        readFile("src/Names/firstname_list.txt", firstNames);
+        readFile("src/Names/surname_list.txt", surnameNames);
+        readFile("src/Names/entities_list.txt", entityNames);
+        readFile("src/Names/organizations_list.txt", organizationNames);
+        readFile("src/Names/degrees_list.txt", degreesNames);
+        readFile("src/Names/campi_list.txt", campiNames);
     }
 
     private void readFile(String fileName, ArrayList<String> names) throws IOException
